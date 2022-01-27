@@ -46,7 +46,7 @@ function Appoitment() {
   return (
     <div className="App">
      <h1 className="text-info">React Big Calendar</h1><br/><br/>
-         <AddEvent toggle={showEvent}/> 
+         <AddEvent toggle={showEvent} closeModal={setShowEvent}/> 
      <Calendar
       selectable
       style={{ height: 700 }}

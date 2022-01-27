@@ -4,10 +4,8 @@ import { Card, Button, ListGroup, Modal, Form } from 'react-bootstrap'
 function AddEvent(props) {
 
 
-    const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => props.closeModal(false);
   return (
     <div className="App">
      <Modal
