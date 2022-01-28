@@ -14,7 +14,25 @@ function Appoitment() {
 
 
   const [showEvent, setShowEvent] = useState(false)
+  const [year, setYear] = useState(null)
+  const [day, setDay] = useState(null)
+  const [month, setMonth] = useState(null)
+  const [eventlist, setEventList] = useState([
+    {
+      title: "demo",
+      start: new Date("01/1/2022"),
+      end: new Date("01/5/2022"),
+    }
+  ] )
 
+console.log("eventlist",eventlist)
+
+const setNewEvent = (data)=>{
+    let oldEvent=  [...eventlist]
+    oldEvent.push(data)
+    setEventList(oldEvent)
+  }
+console.log("old",eventlist)
   const selectedSlot = ({start,end})=>{
     console.log("e",start,end)
     setShowEvent(true)
@@ -27,26 +45,13 @@ function Appoitment() {
       }
     
      
-    
-    let eventlist= [
-      {
-        title: "demo",
-        start: new Date(2022, 0, 29),
-        end: new Date(2022, 0, 32),
-      },
-      {
-        title: "demo2",
-        start: new Date(2022, 1, 3),
-        end: new Date(2022, 1, 9),
-      }
-    
-    ] 
+  
 
 
   return (
     <div className="App">
      <h1 className="text-info">React Big Calendar</h1><br/><br/>
-         <AddEvent toggle={showEvent} closeModal={setShowEvent}/> 
+         <AddEvent toggle={showEvent} closeModal={setShowEvent} setEventList={setNewEvent}/> 
      <Calendar
       selectable
       style={{ height: 700 }}
