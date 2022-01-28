@@ -20,7 +20,7 @@ function Appoitment() {
   const [eventlist, setEventList] = useState([
     {
       title: "demo",
-      start: new Date("01/1/2022"),
+      start: "Sat Jan 01 2022 00:00:00 GMT+0530 (India Standard Time)",
       end: new Date("01/5/2022"),
     }
   ] )
