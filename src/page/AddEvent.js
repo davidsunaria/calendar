@@ -38,7 +38,7 @@ function AddEvent(props) {
   const handleDateSelect = (e) => {
     console.log(e)
   }
-
+console.log("props",props.disableDate)
   return (
     <>
       <Modal
@@ -60,7 +60,9 @@ function AddEvent(props) {
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Start Date</Form.Label>
-              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} onSelect={handleDateSelect} />
+              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} onSelect={handleDateSelect} 
+              dayClassName={date => date.getTime() === new Date(props.disableDate).getTime() ?  'disabled-date' : undefined}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>End Date</Form.Label>
