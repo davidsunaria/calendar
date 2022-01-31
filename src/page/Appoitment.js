@@ -20,6 +20,7 @@ function Appoitment() {
   const [month, setMonth] = useState(null)
   const [eventlist, setEventList] = useState([])
   const [perDayEvent, setPerDayEvent] = useState([])
+  const [demo, setDemo] = useState([])
   const [disableDate, setDisableDate] = useState(null)
 
   console.log("eventlist", eventlist)
@@ -28,7 +29,21 @@ function Appoitment() {
     let oldEvent = [...eventlist]
     let newdate = moment(data.start).format('L');
     perDayEvent.push(newdate)
+    
     setPerDayEvent(perDayEvent)
+    perDayEvent.forEach((value)=>{
+       if(demo.length==0){
+          demo.push(value)
+          setDemo(demo)
+       }
+       else if (demo.length!==0){
+         demo.forEach(val=>{
+            if(value.value){
+              console.log("gyuregyufe")
+            }
+         })
+       }
+    })
     oldEvent.push(data)
     setEventList(oldEvent)
   }
