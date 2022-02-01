@@ -4,7 +4,7 @@ import { Button } from 'react-bootstrap'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment'
 import AddEvent from "./AddEvent.js"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const localizer = momentLocalizer(moment);
 
@@ -15,13 +15,10 @@ function Appoitment() {
 
 
   const [showEvent, setShowEvent] = useState(false)
-  const [year, setYear] = useState(null)
-  const [day, setDay] = useState(null)
-  const [month, setMonth] = useState(null)
   const [eventlist, setEventList] = useState([])
   const [perDayEvent, setPerDayEvent] = useState([])
-  const [demo, setDemo] = useState([])
-  const [disableDate, setDisableDate] = useState(null)
+  const [disableDate, setDisableDate] = useState([])
+  const [finaldisable, setFinalDisable] = useState([])
 
   console.log("eventlist", eventlist)
 
@@ -29,40 +26,51 @@ function Appoitment() {
     let oldEvent = [...eventlist]
     let newdate = moment(data.start).format('L');
     perDayEvent.push(newdate)
-    
     setPerDayEvent(perDayEvent)
-    perDayEvent.forEach((value)=>{
-       if(demo.length==0){
-          demo.push(value)
-          setDemo(demo)
-       }
-       else if (demo.length!==0){
-         demo.forEach(val=>{
-            if(value.value){
-              console.log("gyuregyufe")
-            }
-         })
-       }
-    })
-    oldEvent.push(data)
-    setEventList(oldEvent)
+    const counts = {};
+    perDayEvent.forEach((x) => {
+      counts[x] = (counts[x] || 0) + 1;
+    });
+    console.log("counts", counts)
+    const tempdisable = [...disableDate]
+    for (const property in counts) {
+      if (counts[property] < 4) {
+        oldEvent.push(data)
+        setEventList(oldEvent)
+      }
+      else {
+        console.log("cent add",property)
+         tempdisable.push(property)
+         setDisableDate(tempdisable)
+      }
+
+    }
+
   }
+
+  // useEffect(() => {
+  //   if (disableDate.length !== 0) {
+  //     const counts = {};
+  //     disableDate.forEach((x) => {
+  //       counts[x] = (counts[x] || 0) + 1;
+  //     });
+  //     console.log("new count",counts)
+  //      for (const property in counts) {
+  //        if (counts[property] > 3) {
+  //          finaldisable.push(property)
+  //          setFinalDisable(finaldisable)
+  //        }
+  //        else {
+  //          console.log("disable date")
+  //        }
+  
+  //      }
+  //   }
+  // }, [disableDate])
+
   console.log("old", eventlist)
   const selectedSlot = ({ start, end }) => {
     let daySelected = moment(start).format('L');
-    
-    let filterEvent = perDayEvent.filter((value) => {
-      if (value == daySelected) {
-        return daySelected
-      }
-    })
-    console.log("filterEvent.length",filterEvent.length)
-    if (filterEvent.length > 3) {
-      setDisableDate(filterEvent[0])
-    }
-    console.log("filterevrnt", filterEvent[0])
-    
-
   }
 
   console.log("perday", perDayEvent)
